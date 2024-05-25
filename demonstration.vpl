@@ -1,0 +1,119 @@
+// This line of code is essential, as it will import everything needed to run VPL
+SuDung "vpl";
+
+// Additional modules
+SuDung "toan";
+
+// DATATYPE TABLE:
+	// hang: constant
+	// ckt: string
+	// kt: char
+	// sn: integer
+	// sthuc: Float / Double (Specific datatype must be specified if variable is assigned to a literal), e.g.: 
+		// phan_tram: sthuc = 90.1f;
+		// phan_tram_1: sthuc = 90.8492340d;
+		// or, if dynamically assigned, must include the specific datatype's initial after `sthuc ` (In a way, `f` and `d` are the attributes for `sthuc`), e.g.:
+			// var: sthuc f;
+			// var = 90.1f; 
+			// var = 90.1; (After declaration, the "f" is omissible)
+	// Exclusive attributes for datatypes "sn" and "sthuc":
+		// dai: long (e.g.: var: sthuc dai = 92349023490.42940340f;)
+		// ngan: short
+		// ko_dau: unsigned
+		// co_dau: signed
+	// DT*: Pointer to a datatype
+	// Specific datatypes can be combined with other datatypes, as long as it is logically correct, e.g.: constant: sn hang = 2;
+	// It is recommended that the order of datatypes adhere to Vietnamese grammar – a noun followed by two adjectives, e.g.:
+	// var: sthuc dai ko_dau;
+	// var1: sthuc co_dau ngan;
+
+// FUNCTIONS/CONTROL STRUCTURES USED IN CODE
+	// in_ra(ckt || kt*, ckt_chia_cach: ckt || kt*) – Vietnamese: "in ra" is similar to: print(str || char*)
+	// doc(ckt || kt*) – Vietnamese: "đọc" is similar to Python's input() or C's scanf()
+	// cap_bo_nho(sn ko_dau) – Vietnamese: "cấp bộ nhớ", is a built-in function analogous to C's malloc()
+	// khoang(a: sn || sthuc, b: sn || sthuc) – Vietnamese: "khoảng" is similar to Python's range(), but khoang() is a-and-b inclusive.
+	// cho ELEM trong ARRAY {…} – Vietnamese: "cho … trong …" is similar to: for ELEM in ARRAY {…}
+	// cho_tung ELEM trong ARRAY {…} – Vietnamese: "cho_từng … trong …" is similar to C++'s foreach( elem : array) {…}
+	// neu (condition) {…} hay (condition_1) {…} khong_thi {…} – Vietnamese: "nếu … hay… không_thì …" is similar to: if (condition) {…} else if (condition) {…} else {…}
+
+constant: sn hang = 2;
+ham main(sn argc, ckt argv) -> sn {
+	phan_tram: sthuc = 90.1f;
+
+	in_ra("Chào thế giới!\n");
+	ten: ckt = doc("Tên bạn là gì? ");
+	tuoi: sn = doc("Bạn bao nhiêu tuổi? ");
+	in_ra(	"Bạn là ${ten} và bạn ${tuoi} tuổi. Phần trăm: ${phan_tram}\n");
+	
+	// Moving onto more complex concepts 
+	arr[]: kt = {'a', 'b', 'c', 'd'}; 
+	cho i trong khoang( 0, kich_co(arr) - 1 ) {
+		// Type-casting and string concatenation
+		in_ra( (ckt) arr[i] + " ");
+	}
+	in_ra("\n");
+	cho_tung phan_tu trong arr {
+		in_ra(phan_tu + " ");
+	} 
+	in_ra("\n");
+
+		// Dynamically allocated array
+	elem_c: sn = doc("Nhập số lượng phần tử trong mảng: "); 
+	ptr: sn* = (sn*) cap_bo_nho(kich_co(sn) * elem_c);
+	neu (ptr == NULL) {
+		in_ra("Không thể cấp bộ nhớ!\n");
+		dua_ve -1;
+	}
+	khong_thi {
+		cho i trong khoang(0, elem_c – 1) {
+			ptr[i] = i + 1;
+		}
+		cho_tung phan_tu trong ptr {
+				in_ra(phan_tu + " ");
+		}
+	}
+
+	giai_phong_vung_nho(ptr);
+
+		// Demonstration of function calling
+			// Declaring multiple variables and reading their values from the standard input, separated (ckt_chia_cach, Vietnamese: "ckt_chia_cách") by ", "
+	a, b, c: sthuc f = doc("Nhập a, b, c: ", ckt_chia_cach = ", ");
+	a_ptr: sthuc f* = &a;
+	b_ptr: sthuc f* = &b;
+	c_ptr: sthuc f* = &c;
+	dien_tich: sthuc f = tinh_dien_tich(a_ptr, b_ptr, c_ptr);
+	in_ra("Diện tích tam giác là: ${dien_tich}\n");
+	// Alternatively:
+	// in_ra("Diện tích tam giác là: " + (ckt) dien_tich + '\n');
+	dua_ve 0;
+}
+
+
+ham tinh_dien_tich(a: sthuc f*, b: sthuc f*, c: sthuc f*) -> sthuc f {
+	/*
+	* VI: Tính diện tích tam giác bằng công thức Hê-rôn
+	* EN: Calculates the area of a triangle using Heron's formula
+	*/
+	// Dereferencing
+	s: sthuc = (*a + *b + *c) / 2f;
+		// Alternatively:
+		// s: sthuc f = (*a + *b + *c) / 2;
+	dua_ve sqrt(s * (s - *a) * (s - *b) * (s - *c));
+}
+
+
+/* EXPECTED OUTPUT:
+
+* Chào thế giới!
+* Tên bạn là gì? Nick
+* Bạn bao nhiêu tuổi? 16
+* Bạn là Nick và bạn 16 tuổi. Phần trăm: 90.1
+* a b c d 
+* a b c d 
+* Nhập số lượng phần tử trong mảng: 5
+* 1 2 3 4 5
+* Nhập a, b, c: 12, 13, 14
+* Diện tích tam giác là: 72.30793525
+* [Program executed in 10s]
+
+*/
