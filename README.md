@@ -1,6 +1,7 @@
 > [!NOTE]
 > PhởLang is currently under development.
 
+
 # PhởLang
 PhởLang is a full-fledged Vietnamese programming language that aims to open the world of Computer Science to Vietnamese students through its intuitive Vietnamese syntax.
 
@@ -14,3 +15,6 @@ This has led me to believe that the solution to this is to create a Vietnamese-b
 
 I believe that what sets PhởLang apart from other Vietnamese-based programming languages is its features. Most of the aforementioned languages are purely experimental/conceptual, whereas this language is full-fledged - complete with essential features that constitute a modern programming language (e.g. well-defined syntax, datatypes, operators/expressions, control structures, functions/procedures, scoping, memory management, I/O, exception handling, object-oriented features, concurrency/multithreading).
 For schools that still use outdated programming languages, PhởLang, I believe, can bridge the gap by offering a modern, relevant alternative.
+
+> [!NOTE]
+> PhởLang is also called VPL (short for Vietnamese Phởgramming Language), and the latter alias will be used henceforth.
