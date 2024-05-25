@@ -18,3 +18,8 @@ For schools that still use outdated programming languages, PhởLang, I believe,
 
 > [!NOTE]
 > PhởLang is also called VPL (short for Vietnamese Phởgramming Language), and the latter alias will be used henceforth.
+
+# VPL's syntax
+## Striking a balance between convention and intuitiveness
+VPL has conventions commonly seen in most programming languages, e.g. declaring header files first, being a strongly-typed language, having a ```main()``` function, using curly braces to determine scopes, using semicolons, etc.
+Because these conventions might be overwhelming to novice programmers, VPL is made with intuitiveness in mind, reducing as many symbols as possible to avoid being cryptic while still maintaining certain conventions, like the use of curly braces. To elaborate on the latter, VPL is made to resemble most programming languages, as opposed to Python (wherein, for instance, scopes are determined by indentation, and semicolons are optional)
